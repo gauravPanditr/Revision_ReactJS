@@ -1,12 +1,15 @@
 import { useState } from "react";
 import Input from "../components/Input";
+import ToastMessage from "../components/ToastMessage";
+import { login } from "../apis/login_api";
 
 export default function Login() {
+  const[toast,setToast]=useState(false);
   const [form, setForm] = useState({
     username: "",
     password: ""
   });
-
+ 
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -14,12 +17,31 @@ export default function Login() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
+
+    try {
+      const data = await login(form);
+
+      console.log(data);
+      
+      localStorage.setItem("token", data.token);
+       
+      
+      setToast(true);
+      
+
+      setTimeout(() => setToast(false), 2000);
+    } catch (err) {
+      console.error(err);
+    }
   };
+ 
 
   return (
+    <>
+    {toast && <ToastMessage message="Login successful!" />}
+
     <form
       onSubmit={handleSubmit}
       className="max-w-sm mx-auto mt-20 bg-gray-900 p-6 rounded-lg"
@@ -40,7 +62,7 @@ export default function Login() {
         onChange={handleChange}
         placeholder="Enter password"
       />
-
+    
       <button
         type="submit"
         className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-md mt-4"
@@ -48,5 +70,6 @@ export default function Login() {
         Login
       </button>
     </form>
+    </>
   );
 }

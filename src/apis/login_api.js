@@ -6,10 +6,12 @@ export const login=async(credentials)=>{
         "https://fakestoreapi.com/auth/login",
       credentials
     );
+   
     return response.data;
     
    } catch (error) {
      throw error.response?.data;
-
+     
    }
 }
+//Login System and profie section 

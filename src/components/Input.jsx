@@ -1,4 +1,3 @@
-import React from "react";
 
 const Input = ({
   label,
@@ -20,6 +19,8 @@ const Input = ({
         placeholder={placeholder}
         className="px-3 py-2 rounded-md bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-orange-500"
       />
+
+
     </div>
   );
 };
